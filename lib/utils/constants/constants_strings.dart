@@ -47,4 +47,14 @@ class Strings {
   static var submit = "Submit";
 
   static String enterEmail = "Enter the email address\n associated with your account ";
+
+  static String otpVerification = "OTP Verification";
+
+  static String verificationMsg = "Enter the verification code we just sent on your mobile number";
+
+  static var verify = "Verify";
+
+  static String didntReceivedOTP = "Didn't received OTP?";
+
+  static String resend = "Resend";
 }

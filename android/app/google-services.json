@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "53886466639",
+    "project_id": "kickstarter-ebc8a",
+    "storage_bucket": "kickstarter-ebc8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53886466639:android:3b888ee5a72531396d083a",
+        "android_client_info": {
+          "package_name": "com.app.kickstarter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53886466639-gjsc6jh1u2b00gnol3p7a1idcro9rrvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNfoipse2L1eN8dJViy3uQOh6VFRQcI2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53886466639-gjsc6jh1u2b00gnol3p7a1idcro9rrvt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

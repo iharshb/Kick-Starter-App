@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kickstarter/core/z_core.dart';
 import 'package:kickstarter/pages/authentication/page_forgotpass.dart';
 import 'package:kickstarter/providers/provider_bottom_navigation.dart';
 import 'package:kickstarter/providers/provider_login.dart';
@@ -33,41 +34,49 @@ class _LoginPageState extends State<LoginPage> {
     theme = Theme.of(context);
     loginProvider = Provider.of<LoginProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: ProgressWidget(
-        isShow: false,
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Container(
-            padding: EdgeInsets.all(size.getWidthPx(60)),
-            child: SafeArea(
-              child: Form(
-                key: _formKey,
-                autovalidate: loginProvider.autoValidate,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: size.hp(20)),
-                    topHeaderWidgets(),
-                    SizedBox(height: size.getHeightPx(140)),
-                    _emailWidget(),
-                    _passwordWidget(),
-                    commonHeight(),
-                    textForgotPwd(),
-                    SizedBox(height: size.getHeightPx(140)),
-                    _loginButtonWidget(),
-                    commonHeight(),
-                    SizedBox(height: size.getHeightPx(140)),
-                    //bottomTextWidget()
-                  ],
-                ),
-              ),
+        backgroundColor: Colors.white,
+        body: ProgressWidget(
+          isShow: false,
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: ProviderWidget<LoginProvider>(
+              model: loginProvider,
+              onModelReady: (model) {},
+              builder: (context, model, child) {
+                return Container(
+                  padding: EdgeInsets.all(size.getWidthPx(60)),
+                  child: SafeArea(
+                    child: Form(
+                      key: _formKey,
+                      onWillPop: () async {
+                        return !model.isBusy;
+                      },
+                      autovalidateMode: AutovalidateMode.always,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: size.hp(20)),
+                          topHeaderWidgets(),
+                          SizedBox(height: size.getHeightPx(140)),
+                          _emailWidget(),
+                          _passwordWidget(),
+                          commonHeight(),
+                          textForgotPwd(),
+                          SizedBox(height: size.getHeightPx(140)),
+                          _loginButtonWidget(),
+                          commonHeight(),
+                          SizedBox(height: size.getHeightPx(140)),
+                          //bottomTextWidget()
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   GestureDetector textForgotPwd() {
@@ -166,6 +175,13 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   Widget _loginButtonWidget() {

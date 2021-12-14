@@ -1,18 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kickstarter/core/z_core.dart';
 
-class LoginProvider extends ChangeNotifier {
+class LoginProvider extends ViewStateModel {
   bool isLoading = false;
   bool autoValidate = false;
   bool passAutoValidate = false;
 
+  LoginProvider({ViewState? viewState}) : super(viewState);
+
   callLogin(BuildContext context, body) async {
     try {
-      setLoading(true);
+      setBusy();
       //  await WebServices().postCallLogin(context, body);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+      setIdle();
+    } catch (e, s) {
+      setError(e, s);
     }
   }
 

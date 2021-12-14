@@ -1,4 +1,4 @@
-// import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kickstarter/providers/provider_bottom_navigation.dart';
@@ -9,19 +9,18 @@ import 'package:kickstarter/pages/page_splash.dart';
 import 'package:kickstarter/theme/theme_provider.dart';
 import 'package:kickstarter/theme/z_imports_theme.dart';
 import 'package:kickstarter/utils/z_imports_utils.dart';
-
 import 'utils/managers/manager_notification.dart';
 
-//Receive message when app is in background solution for on message
-// Future<void> backgroundHandler(RemoteMessage message) async {
-//   print(message.data.toString());
-//   print(message.notification!.title);
-// }
+/*// Receive message when app is in background solution for on message
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}*/
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  //FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(const RootApp());
@@ -48,39 +47,39 @@ class KickStarterApp extends StatefulWidget {
 class _KickStarterAppState extends State<KickStarterApp> {
   @override
   void initState() {
-    //  LocalNotificationService.initialize(context);
-    //   notificationNavigation();
+    //LocalNotificationService.initialize(context);
+    notificationNavigation();
     super.initState();
   }
 
   notificationNavigation() {
     ///gives you the message on which user taps
     ///and it opened the app from terminated state
-    // FirebaseMessaging.instance.getInitialMessage().then((message) {
-    //   if (message != null) {
-    //     final routeFromMessage = message.data["route"];
-    //
-    //     Navigator.of(context).pushNamed(routeFromMessage);
-    //   }
-    // });
-    //
-    // ///forground work
-    // FirebaseMessaging.onMessage.listen((message) {
-    //   if (message.notification != null) {
-    //     print(message.notification!.body);
-    //     print(message.notification!.title);
-    //   }
-    //
-    //   LocalNotificationService.display(message);
-    // });
-    //
-    // ///When the app is in background but opened and user taps
-    // ///on the notification
-    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    //   final routeFromMessage = message.data["route"];
-    //
-    //   Navigator.of(context).pushNamed(routeFromMessage);
-    // });
+    /* FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        final routeFromMessage = message.data["route"];
+
+        Navigator.of(context).pushNamed(routeFromMessage);
+      }
+    });*/
+
+    ///forground work
+    /* FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        print(message.notification!.body);
+        print(message.notification!.title);
+      }
+
+      //LocalNotificationService.display(message);
+    });*/
+
+    ///When the app is in background but opened and user taps
+    ///on the notification
+    /*FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final routeFromMessage = message.data["route"];
+
+      Navigator.of(context).pushNamed(routeFromMessage);
+    });*/
   }
 
   @override

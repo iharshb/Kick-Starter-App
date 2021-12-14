@@ -80,7 +80,7 @@ class PreferenceManager {
   static String getString(String key, {String defValue = ''}) {
     if (_prefs == null) return defValue;
 
-    return EncryptUtils.encodeBase64(_prefs!.getString(key)!);
+    return EncryptUtils.decodeBase64(_prefs!.getString(key)!);
   }
 
   /// put string.

@@ -5,6 +5,8 @@ import 'package:kickstarter/utils/z_imports_utils.dart';
 import 'package:kickstarter/widgets/z_imports_widgets.dart';
 import 'package:provider/provider.dart';
 
+import 'page_enter_otp.dart';
+
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
-              autovalidate: loginProvider.passAutoValidate,
+              autovalidateMode: AutovalidateMode.always,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -94,7 +96,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
       textAlign: TextAlign.left,
       focusNode: _emailFocusNode,
       controller: _emailController,
-      keyboardType: TextInputType.phone,
+      keyboardType: TextInputType.emailAddress,
       style: theme.textTheme.subtitle1!.copyWith(fontFamily: FontAssets.semiBoldFont, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
         hintText: Strings.email,
@@ -128,10 +130,22 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
     Utils.hideKeyboard(context);
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const VerifyOTPPage()),
+      );
+
       // loginProvider.callForgetPassword(context, _emailController.text);
     } else {
       loginProvider.setAutoValidate(true);
       // loginProvider.callForgetPassword(context, _emailController.text);
     }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
   }
 }
