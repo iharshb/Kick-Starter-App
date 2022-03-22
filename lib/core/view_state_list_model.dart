@@ -1,13 +1,12 @@
 import 'view_state_model.dart';
 
-/// 基于
 abstract class ViewStateListModel<T> extends ViewStateModel {
   /// Page data
   List<T> list = [];
 
   ViewStateListModel(ViewState? viewState) : super(viewState);
 
-  /// Entering the page loading skeleton for the first time
+  /// Entering the page for the first time
   initData() async {
     setBusy();
     await refresh(init: true);
@@ -16,8 +15,8 @@ abstract class ViewStateListModel<T> extends ViewStateModel {
   /// Pull down to refresh
   refresh({bool init = false}) async {
     try {
-      List<T> data = await loadData();
-      if (data.isEmpty) {
+      List<T>? data = await loadData();
+      if (data!.isEmpty) {
         list.clear();
         setEmpty();
       } else {
@@ -33,7 +32,7 @@ abstract class ViewStateListModel<T> extends ViewStateModel {
   }
 
   /// Load Data
-  Future<List<T>> loadData();
+  Future<List<T>?> loadData();
 
   onCompleted(List<T> data) {}
 }

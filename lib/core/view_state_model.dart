@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kickstarter/utils/z_imports_utils.dart';
 import 'view_state.dart';
 export 'view_state.dart';
 
@@ -54,7 +55,7 @@ class ViewStateModel with ChangeNotifier {
   /// Classification Error and Exception
   void setError(e, stackTrace, {String? message}) {
     ViewStateErrorType errorType = ViewStateErrorType.defaultError;
-
+    print("HARSH ${e.toString()}");
     if (e is dio.DioError) {
       if (e.type == dio.DioErrorType.connectTimeout ||
           e.type == dio.DioErrorType.sendTimeout ||
@@ -91,7 +92,9 @@ class ViewStateModel with ChangeNotifier {
     onError(viewStateError);
   }
 
-  void onError(ViewStateError? viewStateError) {}
+  void onError(ViewStateError? viewStateError) {
+    showErrorMessage(viewStateError!.message!);
+  }
 
   /// Show error message
   showErrorMessage(context, {String? message}) {
@@ -101,8 +104,14 @@ class ViewStateModel with ChangeNotifier {
       } else {
         message = viewStateError!.message!;
       }
+
       Fluttertoast.showToast(
-          msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, timeInSecForIosWeb: 1);
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorConstants.appColor,
+          textColor: Colors.white,
+          timeInSecForIosWeb: 1);
     }
   }
 

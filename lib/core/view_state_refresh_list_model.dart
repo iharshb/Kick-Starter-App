@@ -1,29 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:kickstarter/core/view_state.dart';
+import 'package:kickstarter/core/z_core.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'view_state_list_model.dart';
 
 abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
-  static const int pageNumFirst = 0;
-  static const int pageSize = 20;
+  static const int pageNumFirst = 1;
+  static const int pageSize = 10;
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   ViewStateRefreshListModel(ViewState? viewState) : super(viewState);
 
   RefreshController get refreshController => _refreshController;
+
   int _currentPageNum = pageNumFirst;
 
-  /// [init] Is it the first time to load
-  /// true: When Error, you need to jump to the page
-  /// false: When Error, there is no need to jump to the page and give a prompt directly
   @override
   Future<List<T>?> refresh({bool init = false}) async {
     try {
       _currentPageNum = pageNumFirst;
       var data = await loadData(pageNum: pageNumFirst);
-      if (data.isEmpty) {
+      if (data!.isEmpty) {
         refreshController.refreshCompleted(resetFooterState: true);
         list.clear();
         setEmpty();
@@ -32,11 +29,9 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
         list.clear();
         list.addAll(data);
         refreshController.refreshCompleted();
-        // Less than the number of pages, no pull up to load more
         if (data.length < pageSize) {
           refreshController.loadNoData();
         } else {
-          // To prevent the last pull-up and load more failures, the state needs to be reset
           refreshController.loadComplete();
         }
         setIdle();
@@ -50,11 +45,10 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
     }
   }
 
-  /// 上拉加载更多
   Future<List<T>?> loadMore() async {
     try {
       var data = await loadData(pageNum: ++_currentPageNum);
-      if (data.isEmpty) {
+      if (data!.isEmpty) {
         _currentPageNum--;
         refreshController.loadNoData();
       } else {
@@ -78,7 +72,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   }
 
   @override
-  Future<List<T>> loadData({int pageNum});
+  Future<List<T>?> loadData({int pageNum});
 
   @override
   void dispose() {

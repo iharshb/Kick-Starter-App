@@ -21,7 +21,7 @@ class ProviderWidgetSelector<T extends ChangeNotifier, S> extends StatefulWidget
     this.onModelReady,
     this.autoDispose,
   }) : super(key: key);
-
+  @override
   _ProviderWidgetState<T> createState() => _ProviderWidgetState<T>();
 }
 
